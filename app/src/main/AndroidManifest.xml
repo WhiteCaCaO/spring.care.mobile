@@ -16,10 +16,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".mypage.ui.MyInfoFragment"
-            android:exported="false" />
-        <activity
-            android:name=".mypage.ui.SeniorMypageActivity"
+            android:name=".board.ui.UpdateActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
@@ -33,7 +30,9 @@
         <activity android:name=".ui.InfoActivity" />
         <activity android:name=".ui.NavItem1Activity" />
         <activity android:name=".ui.NavItem2Activity" />
-        <activity android:name=".ui.NavItem3Activity" />
+        <activity android:name=".board.ui.ListActivity" />
+        <activity android:name=".board.ui.DetailActivity" />
+        <activity android:name=".board.ui.WriteActivity" />
         <activity android:name=".matching.view.CaregiverDetailActivity" />
         <activity android:name=".matching.view.FindCaregiversActivity" />
         <activity android:name=".matching.view.FindJobsActivity" />
