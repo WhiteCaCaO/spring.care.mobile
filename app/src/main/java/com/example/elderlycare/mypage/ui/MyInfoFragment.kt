@@ -1,10 +1,13 @@
 package com.example.elderlycare.mypage.ui
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.Editable
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,7 +16,22 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import com.example.elderlycare.R
 import com.example.elderlycare.databinding.FragmentMyInfoBinding
+import com.example.elderlycare.mypage.service.SeniorPageService
+import com.example.elderlycare.mypage.vo.SeniorDTO
+import com.example.elderlycare.utils.Constants
+import okhttp3.Interceptor
+import okhttp3.JavaNetCookieJar
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
+import java.net.CookieManager
+import java.net.CookiePolicy
+import java.util.prefs.Preferences
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -31,6 +49,9 @@ class MyInfoFragment : Fragment() {
     private var param2: String? = null
 
     lateinit var binding: FragmentMyInfoBinding
+    private lateinit var retrofit: Retrofit
+    private lateinit var service:  SeniorPageService
+    private lateinit var preferences: Preferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +59,9 @@ class MyInfoFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
+
+
 
     }
 
@@ -54,6 +78,9 @@ class MyInfoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+
+        // 프로필 사진
         val requestGalleryLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         )
@@ -89,6 +116,15 @@ class MyInfoFragment : Fragment() {
             intent.type = "image/*"
             requestGalleryLauncher.launch(intent)
         }
+
+
+        // 나의 정보 불러오기
+        setupRetrofit()
+//        val preferences = this.getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
+
+        // SharedPreferences에서 userEmail 가져오기
+//        val userEmail = preferences.getString("user.email", )
+        getSeniorInfo(21) // 사용자 로그인 아이디 줘야함
 
     }
 
@@ -142,4 +178,59 @@ class MyInfoFragment : Fragment() {
         }
         return inSampleSize
     }
+
+
+    private fun setupRetrofit() {
+        val client = setupOkHttpClient()
+
+        retrofit = Retrofit.Builder()
+            .baseUrl(Constants.BASE_URL+"/m/seniorPage/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(client)
+            .build()
+
+        service = retrofit.create(SeniorPageService::class.java)
+    }
+
+    private fun setupOkHttpClient(): OkHttpClient {
+        val cookieManager = CookieManager()
+        cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL)
+        val cookieJar = JavaNetCookieJar(cookieManager)
+
+        return OkHttpClient.Builder()
+            .cookieJar(cookieJar)
+            .addInterceptor(HttpLoggingInterceptor().apply {
+                level = HttpLoggingInterceptor.Level.BODY
+            })
+            .build()
+    }
+
+    private fun getSeniorInfo(userId: Long) {
+        service.SeniorInfo(userId).enqueue(object : Callback<SeniorDTO> {
+            override fun onResponse(call: Call<SeniorDTO>, response: Response<SeniorDTO>) {
+                if (response.isSuccessful) {
+                    if (response.body() != null) {
+                        val seniorDTO = response.body()
+                        Log.d(">>>", "dto: ${seniorDTO?.toString()}")
+                        binding.tvName.text = seniorDTO?.name
+                        binding.tvEmail.text = seniorDTO!!.email
+                        binding.tvRole.text = seniorDTO?.roleStr
+                        binding.edAddress.setText(seniorDTO?.address ?: "")
+                        binding.edPhone.setText(seniorDTO.phoneNumber ?: "")
+                        binding.edHealth.setText(seniorDTO.health ?: "")
+                        binding.edReq.setText(seniorDTO.requirements ?: "")
+                    }
+                } else {
+                    Log.e(">>", "Failed to fetch user info")
+                }
+            }
+
+            override fun onFailure(call: Call<SeniorDTO>, t: Throwable) {
+                Log.e(">>", "Error: ${t.message}", t)
+            }
+        })
+    }
+
+
+
 }

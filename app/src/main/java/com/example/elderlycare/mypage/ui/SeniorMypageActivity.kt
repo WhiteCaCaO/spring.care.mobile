@@ -4,18 +4,14 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.example.elderlycare.R
 import com.example.elderlycare.databinding.ActivitySeniorMypageBinding
-import com.google.android.material.navigation.NavigationView
 import com.google.android.material.tabs.TabLayout
 
 class SeniorMypageActivity : AppCompatActivity() {
-    private lateinit var navigationView: NavigationView
-    private lateinit var navViewContainer: FrameLayout
     private lateinit var binding: ActivitySeniorMypageBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,7 +70,7 @@ class SeniorMypageActivity : AppCompatActivity() {
 //        }
     }
         override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-            setTitle("Bar")
+            setTitle("")
             menuInflater.inflate(R.menu.mypage_bar_menu, menu)
             return super.onCreateOptionsMenu(menu)
         }

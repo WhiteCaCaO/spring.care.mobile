@@ -1,5 +1,6 @@
 package com.example.elderlycare.board.ui
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -7,6 +8,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.example.elderlycare.R
 import com.example.elderlycare.board.service.BoardService
+import com.example.elderlycare.board.vo.BoardDTO
 import com.example.elderlycare.board.vo.BoardVO
 import com.example.elderlycare.databinding.BoardWriteBinding
 import com.example.elderlycare.utils.Constants
@@ -51,10 +53,13 @@ class WriteActivity : AppCompatActivity() {
             val content = binding.content.text.toString()
 
             // 새로운 BoardVO 객체 생성 (작성자, 작성일, 조회수, 댓글수는 서버에서 처리)
-            val boardVO = BoardVO(title, "", content, Date(), 0, 0, null)
+            val boardDTO: BoardDTO = BoardDTO()
+            boardDTO.title = title
+            boardDTO.content = content
+//            val boardVO = BoardVO(title, "", content, Date(), 0, 0, null)
 
-// Retrofit을 사용하여 서버에 POST 요청 보내기
-            service.write(boardVO).enqueue(object : Callback<Void> {
+            // Retrofit을 사용하여 서버에 POST 요청 보내기
+            service.write(boardDTO).enqueue(object : Callback<Void> {
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
                     if (response.isSuccessful) {
                         val write = response.body()
@@ -76,6 +81,11 @@ class WriteActivity : AppCompatActivity() {
                 }
             })
         }
+
+        val preferences = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
+        val userEmail = preferences.getString("user.email", "")
+        Log.d(">>>>", "${userEmail}")
+
     }
 
 
