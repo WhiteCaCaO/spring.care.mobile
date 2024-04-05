@@ -1,26 +1,15 @@
 package com.example.elderlycare.mypage.ui
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.FrameLayout
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.RelativeLayout
-import android.widget.TextView
-import androidx.core.view.ViewCompat
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
-import com.example.elderlycare.MainActivity
 import com.example.elderlycare.R
 import com.example.elderlycare.databinding.ActivitySeniorMypageBinding
-import com.example.elderlycare.ui.NavItem1Activity
-import com.example.elderlycare.ui.NavItem2Activity
-import com.example.elderlycare.ui.NavItem3Activity
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.tabs.TabLayout
 
