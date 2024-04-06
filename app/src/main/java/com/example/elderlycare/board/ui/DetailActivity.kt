@@ -16,8 +16,8 @@ import com.example.elderlycare.board.service.BoardService
 import com.example.elderlycare.board.vo.BoardVO
 import com.example.elderlycare.databinding.BoardDetailBinding
 import com.example.elderlycare.utils.Constants
-import com.example.ex03sqlite.util.getParcelable
-import com.example.ex03sqlite.util.showNoti
+import com.example.elderlycare.utils.getParcelable
+import com.example.elderlycare.utils.showNoti
 import com.google.android.material.navigation.NavigationView
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder

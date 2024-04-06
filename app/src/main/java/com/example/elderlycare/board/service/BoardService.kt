@@ -20,6 +20,6 @@ interface BoardService {
     @POST("write")
     fun write(@Body boardDTO: BoardDTO) : Call<Void>
 
-    @GET("csrf-token")
-    fun getCsrfToken(): Call<Map<String, String>>
+//    @GET("csrf-token")
+//    fun getCsrfToken(): Call<Map<String, String>>
 }

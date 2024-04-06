@@ -2,35 +2,26 @@ package com.example.elderlycare.mypage.ui
 
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.text.Editable
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.Fragment
 import com.example.elderlycare.R
 import com.example.elderlycare.databinding.FragmentMyInfoBinding
 import com.example.elderlycare.mypage.service.SeniorPageService
 import com.example.elderlycare.mypage.vo.SeniorDTO
 import com.example.elderlycare.utils.Constants
-import okhttp3.Interceptor
-import okhttp3.JavaNetCookieJar
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.io.File
-import java.net.CookieManager
-import java.net.CookiePolicy
 import java.util.prefs.Preferences
 
 // TODO: Rename parameter arguments, choose names that match
@@ -78,6 +69,10 @@ class MyInfoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // ScrollView 객체 가져오기
+        val scrollView = binding.scrollView
+
+
 
 
         // 프로필 사진
@@ -118,13 +113,17 @@ class MyInfoFragment : Fragment() {
         }
 
 
-        // 나의 정보 불러오기
+        // <나의 정보 불러오기>
         setupRetrofit()
-//        val preferences = this.getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
 
-        // SharedPreferences에서 userEmail 가져오기
-//        val userEmail = preferences.getString("user.email", )
-        getSeniorInfo(21) // 사용자 로그인 아이디 줘야함
+        // SharedPreferences 에서
+        val preferences = requireActivity().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
+        val userEmail = preferences.getString("user.email", "")
+        val userId = preferences.getLong("user.userId", 0)
+        Log.d(">>>>", "${userEmail}")
+        Log.d(">>>>", "${userId}")
+
+        getSeniorInfo(userId) // 사용자 로그인 아이디 줘야함
 
     }
 
@@ -181,29 +180,29 @@ class MyInfoFragment : Fragment() {
 
 
     private fun setupRetrofit() {
-        val client = setupOkHttpClient()
+//        val client = setupOkHttpClient()
 
         retrofit = Retrofit.Builder()
             .baseUrl(Constants.BASE_URL+"/m/seniorPage/")
             .addConverterFactory(GsonConverterFactory.create())
-            .client(client)
+//            .client(client)
             .build()
 
         service = retrofit.create(SeniorPageService::class.java)
     }
 
-    private fun setupOkHttpClient(): OkHttpClient {
-        val cookieManager = CookieManager()
-        cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL)
-        val cookieJar = JavaNetCookieJar(cookieManager)
-
-        return OkHttpClient.Builder()
-            .cookieJar(cookieJar)
-            .addInterceptor(HttpLoggingInterceptor().apply {
-                level = HttpLoggingInterceptor.Level.BODY
-            })
-            .build()
-    }
+//    private fun setupOkHttpClient(): OkHttpClient {
+//        val cookieManager = CookieManager()
+//        cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL)
+//        val cookieJar = JavaNetCookieJar(cookieManager)
+//
+//        return OkHttpClient.Builder()
+//            .cookieJar(cookieJar)
+//            .addInterceptor(HttpLoggingInterceptor().apply {
+//                level = HttpLoggingInterceptor.Level.BODY
+//            })
+//            .build()
+//    }
 
     private fun getSeniorInfo(userId: Long) {
         service.SeniorInfo(userId).enqueue(object : Callback<SeniorDTO> {
@@ -219,6 +218,9 @@ class MyInfoFragment : Fragment() {
                         binding.edPhone.setText(seniorDTO.phoneNumber ?: "")
                         binding.edHealth.setText(seniorDTO.health ?: "")
                         binding.edReq.setText(seniorDTO.requirements ?: "")
+                        binding.edGuardName.setText(seniorDTO.guardianName ?: "")
+                        binding.edRel.setText(seniorDTO.relationship ?: "")
+                        binding.edGuardPhone.setText(seniorDTO.guardianPhoneNumber ?: "")
                     }
                 } else {
                     Log.e(">>", "Failed to fetch user info")
@@ -230,6 +232,8 @@ class MyInfoFragment : Fragment() {
             }
         })
     }
+
+
 
 
 

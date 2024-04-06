@@ -12,4 +12,5 @@ data class BoardDTO(
     var hitcount: Long = 0,
     var replycnt: Long = 0,
     var regdateStr: String = "",
+    var userId: Long = 0
 )

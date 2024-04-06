@@ -1,11 +1,10 @@
-package com.example.ex03sqlite.util
+package com.example.elderlycare.utils
 
 import android.app.Activity
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Build
-import android.os.Parcel
 import android.os.Parcelable
 import android.util.Log
 import android.view.inputmethod.InputMethodManager
@@ -46,4 +45,7 @@ fun <T : Parcelable> Intent.getParcelable(key: String, clazz: Class<T>): T? {
         this.getParcelableExtra(key) as T?
     }
 }
+
+
+
 
