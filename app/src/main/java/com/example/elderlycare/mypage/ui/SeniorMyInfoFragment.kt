@@ -13,7 +13,7 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import com.example.elderlycare.R
-import com.example.elderlycare.databinding.FragmentMyInfoBinding
+import com.example.elderlycare.databinding.FragmentSeniorMyinfoBinding
 import com.example.elderlycare.mypage.service.SeniorPageService
 import com.example.elderlycare.mypage.vo.SeniorDTO
 import com.example.elderlycare.utils.Constants
@@ -22,7 +22,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.prefs.Preferences
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -31,18 +30,17 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [MyInfoFragment.newInstance] factory method to
+ * Use the [SeniorMyInfoFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class MyInfoFragment : Fragment() {
+class SeniorMyInfoFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
 
-    lateinit var binding: FragmentMyInfoBinding
+    lateinit var binding: FragmentSeniorMyinfoBinding
     private lateinit var retrofit: Retrofit
     private lateinit var service:  SeniorPageService
-    private lateinit var preferences: Preferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,7 +60,7 @@ class MyInfoFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
 //        return inflater.inflate(R.layout.fragment_my_info, container, false)
-        binding = FragmentMyInfoBinding.inflate(inflater, container, false)
+        binding = FragmentSeniorMyinfoBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -140,7 +138,7 @@ class MyInfoFragment : Fragment() {
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            MyInfoFragment().apply {
+            SeniorMyInfoFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
@@ -205,7 +203,7 @@ class MyInfoFragment : Fragment() {
 //    }
 
     private fun getSeniorInfo(userId: Long) {
-        service.SeniorInfo(userId).enqueue(object : Callback<SeniorDTO> {
+        service.seniorInfo(userId).enqueue(object : Callback<SeniorDTO> {
             override fun onResponse(call: Call<SeniorDTO>, response: Response<SeniorDTO>) {
                 if (response.isSuccessful) {
                     if (response.body() != null) {

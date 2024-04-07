@@ -8,9 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.elderlycare.databinding.FragmentMatchingInfoBinding
 import com.example.elderlycare.mypage.adapter.MatchingInfoAdapter
+import com.example.elderlycare.mypage.adapter.MatchingInfoAdapter2
+import com.example.elderlycare.mypage.service.CaregiverPageService
 import com.example.elderlycare.mypage.service.SeniorPageService
 import com.example.elderlycare.mypage.vo.MatchingDTO
 import com.example.elderlycare.mypage.vo.MatchingResponse
@@ -27,22 +28,21 @@ import retrofit2.converter.gson.GsonConverterFactory
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
-
 /**
  * A simple [Fragment] subclass.
- * Use the [MatchingInfoFragment.newInstance] factory method to
+ * Use the [MatchingInfoFragment2.newInstance] factory method to
  * create an instance of this fragment.
  */
-class MatchingInfoFragment : Fragment() {
+class MatchingInfoFragment2 : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
 
     lateinit var binding: FragmentMatchingInfoBinding
     private lateinit var retrofit: Retrofit
-    private lateinit var service: SeniorPageService
-    private lateinit var progressAdapter: MatchingInfoAdapter
-    private lateinit var pastAdapter: MatchingInfoAdapter
+    private lateinit var service: CaregiverPageService
+    private lateinit var progressAdapter: MatchingInfoAdapter2
+    private lateinit var pastAdapter: MatchingInfoAdapter2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -94,7 +94,7 @@ class MatchingInfoFragment : Fragment() {
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            MatchingInfoFragment().apply {
+            MatchingInfoFragment2().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
@@ -107,12 +107,12 @@ class MatchingInfoFragment : Fragment() {
         val client = setupOkHttpClient()
 
         retrofit = Retrofit.Builder()
-            .baseUrl(Constants.BASE_URL+"/m/seniorPage/")
+            .baseUrl(Constants.BASE_URL +"/m/caregiverPage/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()
 
-        service = retrofit.create(SeniorPageService::class.java)
+        service = retrofit.create(CaregiverPageService::class.java)
     }
 
     private fun setupOkHttpClient(): OkHttpClient {
@@ -162,8 +162,8 @@ class MatchingInfoFragment : Fragment() {
     }
 
     private fun setupRecyclerViews() {
-        pastAdapter = MatchingInfoAdapter()
-        progressAdapter = MatchingInfoAdapter()
+        pastAdapter = MatchingInfoAdapter2()
+        progressAdapter = MatchingInfoAdapter2()
 
         binding.pastMatching.layoutManager = LinearLayoutManager(requireContext())
         binding.pastMatching.adapter = pastAdapter
