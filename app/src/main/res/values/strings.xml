@@ -42,7 +42,7 @@
     <string name="requirements_hint">요청 사항 입력</string>
     <string name="has_guardian_prompt">보호자 유무를 선택하세요</string>
     <string name="guardian_name_hint">보호자 이름 입력</string>
-    <string name="guardian_relationship_hint">...보호자와의 관계 입력</string>
+    <string name="guardian_relationship_hint">보호자와의 관계 입력</string>
     <string name="guardian_relationship_to_elderly_hint">노인과의 관계 입력</string>
     <string name="elderly_name_hint">노인 이름 입력</string>
     <string name="elderly_gender_prompt">노인 성별을 입력하세요</string>

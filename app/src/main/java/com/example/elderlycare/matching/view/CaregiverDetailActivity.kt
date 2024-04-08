@@ -1,5 +1,6 @@
 package com.example.elderlycare.matching.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
@@ -73,14 +74,16 @@ class CaregiverDetailActivity : AppCompatActivity() {
 
                     nameTextView.text = name
                     countryTextView.text = country
-                    experienceTextView.text = "$experience, ${experienceYears}년"
+                    experienceTextView.text = "${experience}, ${experienceYears}년"
                     certificationTextView.text = certification
                     specializationTextView.text = specialization
                     availableHoursTextView.text = availableHours
 
                     // 요청 버튼 클릭 리스너 설정
                     requestButton.setOnClickListener {
-                        // 요청 기능 구현
+                        val intent = Intent(this, RequestMatchingActivity::class.java)
+                        intent.putExtra("caregiverId", caregiverId)
+                        startActivity(intent)
                     }
                 } catch (e: JSONException) {
                     e.printStackTrace()
