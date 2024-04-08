@@ -79,7 +79,17 @@ class RequestMatchingActivity : AppCompatActivity() {
 
         binding.hasGuardianSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                binding.guardianInfoFields.visibility = if (position == 0) View.GONE else View.VISIBLE
+                when (position) {
+                    0 -> {
+                        binding.guardianInfoFields.visibility = View.GONE
+                    }
+                    1 -> {
+                        binding.guardianInfoFields.visibility = View.VISIBLE
+                    }
+                    2 -> {
+                        binding.guardianInfoFields.visibility = View.GONE
+                    }
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -183,11 +193,11 @@ class RequestMatchingActivity : AppCompatActivity() {
             else -> throw IllegalArgumentException("Invalid user role")
         }
         val preferences = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
-        val userEmail = preferences.getString("user.email", "") ?: ""
+        val userId = preferences.getLong("user.userId", -1)
 
         return MatchingRequestDto().apply {
             this.userRole = userRole
-            this.userEmail = userEmail
+            this.userId = userId
             caregiverId = if (this@RequestMatchingActivity.caregiverId == -1) null else this@RequestMatchingActivity.caregiverId?.toLong()
             matchingCountry = binding.matchingCountry.text.toString()
             startDate = binding.startDate.text.toString()

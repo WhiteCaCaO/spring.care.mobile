@@ -4,12 +4,6 @@
         android:id="@+id/hc_info"
         android:title="THE 홈케어 소개" />
     <item
-        android:id="@+id/nav_item1"
-        android:title="메뉴1" />
-    <item
-        android:id="@+id/nav_item2"
-        android:title="메뉴2" />
-    <item
         android:id="@+id/nav_board"
         android:title="자유게시판" />
     <item

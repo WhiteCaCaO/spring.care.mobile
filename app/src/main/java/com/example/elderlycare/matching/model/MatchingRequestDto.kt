@@ -1,7 +1,7 @@
 package com.example.elderlycare.matching.model
 
 data class MatchingRequestDto(
-    var userEmail: String? = null,
+    var userId: Long? = null,
     var caregiverId: Long? = null,
     var matchingCountry: String? = null,
     var startDate: String? = null,

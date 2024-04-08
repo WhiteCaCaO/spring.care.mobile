@@ -1,5 +1,6 @@
 package com.example.elderlycare.ui
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -12,6 +13,12 @@ import androidx.core.view.ViewCompat
 import com.example.elderlycare.MainActivity
 import com.example.elderlycare.R
 import com.example.elderlycare.board.ui.ListActivity
+import com.example.elderlycare.matching.view.FindCaregiversActivity
+import com.example.elderlycare.matching.view.FindJobsActivity
+import com.example.elderlycare.mypage.ui.CaregiverMypageActivity
+import com.example.elderlycare.mypage.ui.SeniorMypageActivity
+import com.example.elderlycare.user.view.UserCheckActivity
+import com.example.elderlycare.user.view.UserLoginActivity
 import com.google.android.material.navigation.NavigationView
 
 class NavItem2Activity : AppCompatActivity() {
@@ -35,22 +42,41 @@ class NavItem2Activity : AppCompatActivity() {
         // 네비게이션 뷰 초기화
         navigationView = findViewById(R.id.nav_view)
 
+        val preferences = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
+        val userRole = preferences.getString("user.role", "")
+
         // NavigationView 메뉴 아이템 선택 이벤트 처리
         navigationView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.nav_item1 -> {
-                    // nav_item1 선택 시 처리
-                    startActivity(Intent(this, NavItem1Activity::class.java))
-                }
-                R.id.nav_item2 -> {
-                    // nav_item2 선택 시 처리
-                    startActivity(Intent(this, NavItem2Activity::class.java))
+                R.id.hc_info -> {
+                    startActivity(Intent(this, InfoActivity::class.java))
                 }
                 R.id.nav_board -> {
-                    // nav_item3 선택 시 처리
                     startActivity(Intent(this, ListActivity::class.java))
                 }
-                // 다른 메뉴 아이템에 대한 처리
+                R.id.nav_find_caregivers -> {
+                    // nav_item3 선택 시 처리
+                    startActivity(Intent(this, FindCaregiversActivity::class.java))
+                }
+                R.id.nav_find_jobs -> {
+                    // nav_item3 선택 시 처리
+                    startActivity(Intent(this, FindJobsActivity::class.java))
+                }
+                R.id.nav_myPage -> {
+                    if(userRole == "SENIOR"){
+                        startActivity(Intent(this, SeniorMypageActivity::class.java))
+                    }
+                    if(userRole == "CAREGIVER"){
+                        startActivity(Intent(this, CaregiverMypageActivity::class.java))
+                    }
+                }
+                R.id.nav_user_login-> {
+                    // nav_item3 선택 시 처리
+                    startActivity(Intent(this, UserLoginActivity::class.java))
+                }R.id.nav_user_register-> {
+                // nav_item3 선택 시 처리
+                startActivity(Intent(this, UserCheckActivity::class.java))
+            }
             }
             true// true 반환하여 클릭 이벤트 소비
         }
