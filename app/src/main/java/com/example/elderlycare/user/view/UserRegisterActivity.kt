@@ -1,5 +1,6 @@
 package com.example.elderlycare.user.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
@@ -20,6 +21,7 @@ import com.android.volley.Response.Listener
 import com.android.volley.ServerError
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import com.example.elderlycare.MainActivity
 import com.example.elderlycare.R
 import com.example.elderlycare.utils.Constants
 import org.json.JSONObject
@@ -36,32 +38,47 @@ class UserRegisterActivity : AppCompatActivity() {
         setupViewsVisibility(userType)
 
         findViewById<Button>(R.id.buttonRegister).setOnClickListener {
-            val userFormDto = collectUserData()
+            val userFormDto = collectUserData(userType)
             registerUser(userFormDto)
         }
     }
-    private fun collectUserData(): JSONObject  {
-        val name = findViewById<EditText>(R.id.editTextName).text.toString()
-        val email = findViewById<EditText>(R.id.editTextEmail).text.toString()
-        val password = findViewById<EditText>(R.id.editTextPassword).text.toString()
-        val confirmPassword = findViewById<EditText>(R.id.editTextConfirmPassword).text.toString()
-        val phoneNumber = findViewById<EditText>(R.id.editTextPhoneNumber).text.toString()
-        val address = findViewById<EditText>(R.id.editTextAddress).text.toString()
-        val country = findViewById<Spinner>(R.id.spinnerCountry).selectedItem.toString()
-        val gender = findViewById<Spinner>(R.id.spinnerGender).selectedItem.toString()
-        val imageUrl = findViewById<EditText>(R.id.editTextImageUrl).text.toString()
-
-        return JSONObject().apply {
-            put("name", name)
-            put("email", email)
-            put("password", password)
-            put("confirmPassword", confirmPassword)
-            put("phoneNumber", phoneNumber)
-            put("address", address)
-            put("country", country)
-            put("gender", gender)
-            put("imageUrl", imageUrl)
+    private fun collectUserData(userType: String): JSONObject {
+        val data = JSONObject().apply {
+            put("name", findViewById<EditText>(R.id.editTextName).text.toString())
+            put("email", findViewById<EditText>(R.id.editTextEmail).text.toString())
+            put("password", findViewById<EditText>(R.id.editTextPassword).text.toString())
+            put("confirmPassword", findViewById<EditText>(R.id.editTextConfirmPassword).text.toString())
+            put("phoneNumber", findViewById<EditText>(R.id.editTextPhoneNumber).text.toString())
+            put("address", findViewById<EditText>(R.id.editTextAddress).text.toString())
+            put("country", findViewById<Spinner>(R.id.spinnerCountry).selectedItem.toString())
+            put("gender", findViewById<Spinner>(R.id.spinnerGender).selectedItem.toString())
+            put("imageUrl", findViewById<EditText>(R.id.editTextImageUrl).text.toString())
+            // 유저 타입 추가
+            put("userType", userType)
         }
+
+        // 유저 타입에 따른 추가 정보 처리
+        when (userType) {
+            "senior" -> {
+                data.put("health", findViewById<EditText>(R.id.health).text.toString())
+                data.put("requirements", findViewById<EditText>(R.id.requirements).text.toString())
+                data.put("hasGuardian", findViewById<CheckBox>(R.id.hasGuardian).isChecked)
+                if (findViewById<CheckBox>(R.id.hasGuardian).isChecked) {
+                    data.put("guardianName", findViewById<EditText>(R.id.guardianName).text.toString())
+                    data.put("guardianPhoneNumber", findViewById<EditText>(R.id.guardianNumber).text.toString())
+                    data.put("relationship", findViewById<EditText>(R.id.relationship).text.toString())
+                }
+            }
+            "caregiver" -> {
+                data.put("certification", findViewById<EditText>(R.id.certification).text.toString())
+                data.put("specialization", findViewById<EditText>(R.id.specialization).text.toString())
+                data.put("experience", findViewById<EditText>(R.id.experience).text.toString())
+                data.put("experienceYears", findViewById<EditText>(R.id.experienceYears).text.toString().toInt())
+                data.put("availableHours", findViewById<EditText>(R.id.availableHours).text.toString())
+            }
+        }
+
+        return data
     }
 private fun registerUser(userFormDto: JSONObject) {
     val queue = Volley.newRequestQueue(this)
@@ -69,6 +86,8 @@ private fun registerUser(userFormDto: JSONObject) {
 
     val jsonObjectRequest = object : JsonObjectRequest(Method.POST, url, userFormDto,
         { response ->
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
             // 성공 응답 처리
 //            Toast.makeText(this, response.toString(), Toast.LENGTH_LONG).show()
         },
@@ -86,6 +105,8 @@ private fun registerUser(userFormDto: JSONObject) {
                 else -> "Unknown error occurred."
             }
             AlertDialog.Builder(this).setMessage(errorMessage).setPositiveButton("OK", null).show()
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
         }) {
         @Throws(AuthFailureError::class)
         override fun getHeaders(): Map<String, String> {
