@@ -8,7 +8,6 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.viewpager.widget.ViewPager
 import com.android.volley.AuthFailureError
 import com.android.volley.NetworkError
 import com.android.volley.ParseError
@@ -18,7 +17,6 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.example.elderlycare.MainActivity
 import com.example.elderlycare.R
-import com.example.elderlycare.adapter.SliderAdapter
 import com.example.elderlycare.utils.Constants
 import org.json.JSONObject
 
@@ -58,12 +56,14 @@ class UserLoginActivity : AppCompatActivity() {
                 // 로그인 성공 처리
                 val userEmail = response.getString("email")
                 val userRole = response.getString("role")
+                val userId = response.getLong("userId")
 
                 // 사용자 정보 저장 (예: SharedPreferences)
                 val preferences = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
                 val editor = preferences.edit()
                 editor.putString("user.email", userEmail)
                 editor.putString("user.role", userRole)
+                editor.putLong("user.userId", userId)
                 editor.apply()
                 Toast.makeText(this@UserLoginActivity, "로그인 성공", Toast.LENGTH_SHORT).show()
 
