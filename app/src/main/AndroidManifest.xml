@@ -43,6 +43,9 @@
         <activity android:name=".user.view.UserLoginActivity" />
         <activity android:name=".mypage.ui.SeniorMypageActivity" />
         <activity android:name=".mypage.ui.CaregiverMypageActivity" />
+        <activity android:name=".user.view.UserRegisterActivity" />
+        <activity android:name=".user.view.UserChooseActivity" />
+        <activity android:name=".user.view.UserCheckActivity" />
     </application>
 
 </manifest>
