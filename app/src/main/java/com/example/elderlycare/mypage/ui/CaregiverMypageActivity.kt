@@ -6,19 +6,19 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.example.elderlycare.R
-import com.example.elderlycare.databinding.ActivitySeniorMypageBinding
 import com.example.elderlycare.board.ui.ListActivity
 import com.example.elderlycare.matching.view.FindCaregiversActivity
 import com.example.elderlycare.matching.view.FindJobsActivity
 import com.example.elderlycare.MainActivity
+import com.example.elderlycare.databinding.ActivityCaregiverMypageBinding
 import com.google.android.material.tabs.TabLayout
 
-class SeniorMypageActivity : AppCompatActivity() {
-    private lateinit var binding: ActivitySeniorMypageBinding
+class CaregiverMypageActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityCaregiverMypageBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySeniorMypageBinding.inflate(layoutInflater)
+        binding = ActivityCaregiverMypageBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setupTabLayout()
@@ -31,8 +31,8 @@ class SeniorMypageActivity : AppCompatActivity() {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 val transaction = supportFragmentManager.beginTransaction()
                 when (tab?.position) {
-                    0 -> transaction.replace(R.id.tabContent, SeniorMyInfoFragment())
-                    1 -> transaction.replace(R.id.tabContent, MatchingInfoFragment())
+                    0 -> transaction.replace(R.id.tabContent, CaregiverMyInfoFragment())
+                    1 -> transaction.replace(R.id.tabContent, MatchingInfoFragment2())
                 }
                 transaction.commit()
             }
@@ -47,7 +47,7 @@ class SeniorMypageActivity : AppCompatActivity() {
         })
 
         // Set default tab or initial fragment if needed
-        supportFragmentManager.beginTransaction().add(R.id.tabContent, SeniorMyInfoFragment()).commit()
+        supportFragmentManager.beginTransaction().add(R.id.tabContent, CaregiverMyInfoFragment()).commit()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

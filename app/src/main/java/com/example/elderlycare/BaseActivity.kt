@@ -14,6 +14,7 @@ import androidx.core.view.ViewCompat
 import com.example.elderlycare.board.ui.ListActivity
 import com.example.elderlycare.matching.view.FindCaregiversActivity
 import com.example.elderlycare.matching.view.FindJobsActivity
+import com.example.elderlycare.mypage.ui.CaregiverMypageActivity
 import com.example.elderlycare.mypage.ui.SeniorMypageActivity
 import com.example.elderlycare.ui.InfoActivity
 import com.example.elderlycare.ui.NavItem1Activity
@@ -70,6 +71,9 @@ open class BaseActivity : AppCompatActivity() {
         btnLogin = headerLayout.findViewById(R.id.btnLogin)
         btnLogout = headerLayout.findViewById(R.id.btnLogout)
 
+        val preferences = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
+        val userRole = preferences.getString("user.role", "")
+
         navigationView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.hc_info -> {
@@ -93,8 +97,12 @@ open class BaseActivity : AppCompatActivity() {
                     startActivity(Intent(this, FindJobsActivity::class.java))
                 }
                 R.id.nav_myPage -> {
-                    // nav_item3 선택 시 처리
-                    startActivity(Intent(this, SeniorMypageActivity::class.java))
+                    if(userRole == "SENIOR"){
+                        startActivity(Intent(this, SeniorMypageActivity::class.java))
+                    }
+                    if(userRole == "CAREGIVER"){
+                        startActivity(Intent(this, CaregiverMypageActivity::class.java))
+                    }
                 }
             }
             true
