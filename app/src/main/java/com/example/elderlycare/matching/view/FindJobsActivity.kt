@@ -118,7 +118,6 @@ class FindJobsActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        // 데이터 갱신 로직 호출
         fetchJobs(currentPage)
     }
 

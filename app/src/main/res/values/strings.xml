@@ -42,8 +42,25 @@
     <string name="requirements_hint">요청 사항 입력</string>
     <string name="has_guardian_prompt">보호자 유무를 선택하세요</string>
     <string name="guardian_name_hint">보호자 이름 입력</string>
-    <string name="guardian_relationship_hint">...보호자와의 관계 입력</string>
+    <string name="guardian_relationship_hint">보호자와의 관계 입력</string>
     <string name="guardian_relationship_to_elderly_hint">노인과의 관계 입력</string>
     <string name="elderly_name_hint">노인 이름 입력</string>
     <string name="elderly_gender_prompt">노인 성별을 입력하세요</string>
+    <string name="phoneNumber">전화번호</string>
+    <string name="guardian_phoneNumber">보호자 전화번호</string>
+    <string name="address">주소</string>
+    <string name="passwordconfirm">비밀번호 확인</string>
+    <string name="usercheck">원하는 회원가입 유형을 선택해주세요</string>
+    <string name="register">회원가입</string>
+
+
+    <string name="terms_of_service_long_text">여러분 환영합니다 , THE 홈케어 이용해주셔서 감사합니다 .
+    THE 홈케어 는 믿음 과 신뢰 할수있는 서비스 가 되기 위해 노력하겠습니다 . THE 홈케어 를 통해 요양서비스 이용과
+    ,제공 을 통해 세상을 좀더 편리하게 만들어 가겠습니다 THE 홈케어 서비스 이용에 동의 하신다면 , 체크 해주시기
+    바랍니다 .
+    </string>
+    <string name="privacy_policy_long_text">개인정보보호법에 따라 네이버에 회원가입 신청하시는 분께 수집하는
+    개인정보의 항목, 개인정보의 수집 및 이용목적, 개인정보의 보유 및 이용기간, 동의 거부권 및 동의 거부 시 불이익에
+    관한 사항을 안내 드리오니 자세히 읽은 후 동의하여 주시기 바랍니다.
+    </string>
 </resources>

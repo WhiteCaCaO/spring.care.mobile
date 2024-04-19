@@ -4,12 +4,6 @@
         android:id="@+id/hc_info"
         android:title="THE 홈케어 소개" />
     <item
-        android:id="@+id/nav_item1"
-        android:title="메뉴1" />
-    <item
-        android:id="@+id/nav_item2"
-        android:title="메뉴2" />
-    <item
         android:id="@+id/nav_board"
         android:title="자유게시판" />
     <item
@@ -22,4 +16,10 @@
     <item
         android:id="@+id/nav_myPage"
         android:title="마이 페이지" />
+    <item
+        android:id="@+id/nav_user_login"
+        android:title="로그인" />
+    <item
+        android:id="@+id/nav_user_register"
+        android:title="회원가입" />
 </menu>

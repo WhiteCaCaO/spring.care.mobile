@@ -3,7 +3,6 @@ package com.example.elderlycare.user.view
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -22,6 +21,7 @@ import com.example.elderlycare.utils.Constants
 import org.json.JSONObject
 
 class UserLoginActivity : AppCompatActivity() {
+
     private lateinit var editTextEmail: EditText
     private lateinit var editTextPassword: EditText
     private lateinit var buttonLogin: Button

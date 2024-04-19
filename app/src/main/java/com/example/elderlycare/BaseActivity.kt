@@ -17,8 +17,7 @@ import com.example.elderlycare.matching.view.FindJobsActivity
 import com.example.elderlycare.mypage.ui.CaregiverMypageActivity
 import com.example.elderlycare.mypage.ui.SeniorMypageActivity
 import com.example.elderlycare.ui.InfoActivity
-import com.example.elderlycare.ui.NavItem1Activity
-import com.example.elderlycare.ui.NavItem2Activity
+import com.example.elderlycare.user.view.UserCheckActivity
 import com.example.elderlycare.user.view.UserLoginActivity
 import com.google.android.material.navigation.NavigationView
 
@@ -79,12 +78,6 @@ open class BaseActivity : AppCompatActivity() {
                 R.id.hc_info -> {
                     startActivity(Intent(this, InfoActivity::class.java))
                 }
-                R.id.nav_item1 -> {
-                    startActivity(Intent(this, NavItem1Activity::class.java))
-                }
-                R.id.nav_item2 -> {
-                    startActivity(Intent(this, NavItem2Activity::class.java))
-                }
                 R.id.nav_board -> {
                     startActivity(Intent(this, ListActivity::class.java))
                 }
@@ -103,6 +96,13 @@ open class BaseActivity : AppCompatActivity() {
                     if(userRole == "CAREGIVER"){
                         startActivity(Intent(this, CaregiverMypageActivity::class.java))
                     }
+                }
+                R.id.nav_user_login-> {
+                    // nav_item3 선택 시 처리
+                    startActivity(Intent(this, UserLoginActivity::class.java))
+                }R.id.nav_user_register-> {
+                // nav_item3 선택 시 처리
+                startActivity(Intent(this, UserCheckActivity::class.java))
                 }
             }
             true
