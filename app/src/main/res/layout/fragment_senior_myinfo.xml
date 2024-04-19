@@ -50,7 +50,7 @@
                         android:layout_width="120dp"
                         android:layout_height="35dp"
                         android:layout_gravity="center"
-                        android:text="프로필 사진"
+                        android:text="사진 변경"
                         android:textSize="11dp" />
                 </LinearLayout>
 

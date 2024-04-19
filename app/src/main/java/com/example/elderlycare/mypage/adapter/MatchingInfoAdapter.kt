@@ -1,5 +1,6 @@
 package com.example.elderlycare.mypage.adapter
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -46,7 +47,18 @@ class MatchingInfoAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             tvEndTime.text = targetFormat.format(endTime)
             tvCareName.text = dto.matchingUserName
             tvCountry.text = dto.matchingCountry
-            tvResult.text = dto.status
+            if(dto.status.equals("REQUESTED")){
+                tvResult.text = "요청중"
+                tvResult.setTextColor(Color.BLUE)
+            } else if(dto.status.equals("POSTED")){
+                tvResult.text = "구직중"
+                tvResult.setTextColor(Color.BLUE)
+            } else if(dto.status.equals("IN_PROGRESS")){
+                tvResult.text = "진행중"
+                tvResult.setTextColor(Color.BLUE)
+            }
+
+
         }
     }
 
@@ -72,7 +84,13 @@ class MatchingInfoAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             tvEndTime.text = targetFormat.format(endTime)
             tvCareName.text = dto.matchingUserName
             tvCountry.text = dto.matchingCountry
-            tvResult.text = dto.status
+            if(dto.status.equals("COMPLETED")){
+                tvResult.text = "완료"
+                tvResult.setTextColor(Color.parseColor("#006400"))
+            } else if(dto.status.equals("CANCELLED")){
+                tvResult.text = "취소"
+                tvResult.setTextColor(Color.RED)
+            }
         }
     }
 

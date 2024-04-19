@@ -67,12 +67,6 @@ class SeniorMyInfoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // ScrollView 객체 가져오기
-        val scrollView = binding.scrollView
-
-
-
-
         // 프로필 사진
         val requestGalleryLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
@@ -122,6 +116,39 @@ class SeniorMyInfoFragment : Fragment() {
         Log.d(">>>>", "${userId}")
 
         getSeniorInfo(userId) // 사용자 로그인 아이디 줘야함
+
+        binding.btnEditInfo.setOnClickListener {
+            val preferences = requireActivity().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
+            val userId = preferences.getLong("user.userId", 0)
+
+            val name = binding.tvName.text.toString()
+            var address = binding.edAddress.text.toString()
+            var phoneNumber = binding.edPhone.text.toString()
+            var health = binding.edHealth.text.toString()
+            var req = binding.edReq.text.toString()
+            var guardName = binding.edGuardName.toString()
+            var relationship = binding.edRel.toString()
+            var guardPhone = binding.edGuardPhone.toString()
+
+
+            var seniorDTO = SeniorDTO()
+            seniorDTO.userId = userId
+            seniorDTO.name = name
+            seniorDTO.address = address
+            seniorDTO.phoneNumber = phoneNumber
+            seniorDTO.health = health
+            seniorDTO.requirements = req
+            seniorDTO.guardianName = guardName
+            seniorDTO.relationship = relationship
+            seniorDTO.guardianPhoneNumber = guardPhone
+            // 임시조치
+            seniorDTO.hasGuardian = true
+
+            updateSeniorInfo(seniorDTO)
+        }
+
+
+
 
     }
 
@@ -202,6 +229,7 @@ class SeniorMyInfoFragment : Fragment() {
 //            .build()
 //    }
 
+    // senior 정보
     private fun getSeniorInfo(userId: Long) {
         service.seniorInfo(userId).enqueue(object : Callback<SeniorDTO> {
             override fun onResponse(call: Call<SeniorDTO>, response: Response<SeniorDTO>) {
@@ -226,6 +254,31 @@ class SeniorMyInfoFragment : Fragment() {
             }
 
             override fun onFailure(call: Call<SeniorDTO>, t: Throwable) {
+                Log.e(">>", "Error: ${t.message}", t)
+            }
+        })
+    }
+
+    // senior 정보 수정
+    private fun updateSeniorInfo(seniorDTO: SeniorDTO) {
+        service.updateInfo(seniorDTO).enqueue(object : Callback<String> {
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                if (response.isSuccessful) {
+                    if (response.body() != null) {
+                        val email = response.body().toString()
+                        val intent = Intent(requireActivity(), SeniorMypageActivity::class.java)
+                        startActivity(intent)
+//                        Toast.makeText(requireContext(), "${email}님의 정보가 수정되었습니다", Toast.LENGTH_SHORT)
+
+//                        showNoti(requireContext(), "수정완료", "${email}님의 정보가 수정되었습니다")
+                        Log.d("이메일", "email: ${email}")
+                    }
+                } else {
+                    Log.e(">>", "Failed to fetch user info")
+                }
+            }
+
+            override fun onFailure(call: Call<String>, t: Throwable) {
                 Log.e(">>", "Error: ${t.message}", t)
             }
         })

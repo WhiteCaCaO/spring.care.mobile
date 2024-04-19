@@ -1,29 +1,29 @@
 package com.example.elderlycare.mypage.vo
 
-data class SeniorDTO (
+data class SeniorDTO(
 
     // user 정보
-    val userId: Long,
-    val roleStr: String,
-    val email: String,
-    val name: String,
-    var address: String?,
-//    var password: String,
-    var phoneNumber: String?,
-    var country: String?,
-    var gender: String,
-    var image: String?,
+    var userId: Long = 0L,
+    val roleStr: String = "",
+    val email: String = "",
+    var name: String = "",
+    var address: String? = null,
+//    var password: String, // 주석 처리된 필드
+    var phoneNumber: String? = null,
+    var country: String? = null,
+    var gender: String? = null,
+    var image: String? = null,
 
     // senior 정보
-    val seniorId: Long,
-    var serniorName: String?,
-    var health: String?,
-    var requirements: String?,
-    var hasGuardian: Boolean?,
+    var seniorId: Long = 0L,
+    var serniorName: String? = null,
+    var health: String? = null,
+    var requirements: String? = null,
+    var hasGuardian: Boolean = true,
 
     // guardian 정보
-    val guardianId: Long,
-    var guardianName: String?,
-    var guardianPhoneNumber: String?,
-    var relationship: String?
+    var guardianId: Long = 0L,
+    var guardianName: String? = null,
+    var guardianPhoneNumber: String? = null,
+    var relationship: String? = null
 )

@@ -4,7 +4,9 @@ import com.example.elderlycare.mypage.vo.MatchingDTO
 import com.example.elderlycare.mypage.vo.MatchingResponse
 import com.example.elderlycare.mypage.vo.SeniorDTO
 import retrofit2.Call
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface SeniorPageService {
@@ -14,5 +16,8 @@ interface SeniorPageService {
 
     @GET("matchingInfo/{userId}")
     fun matchingInfo(@Path("userId") userId: Long): Call<MatchingResponse>
+
+    @PUT("updateInfo")
+    fun updateInfo(@Body seniorDTO: SeniorDTO): Call<String>
 
 }
